@@ -1,0 +1,210 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MSc Environmental Engineering thesis poster
+% Muhammad Faseeh Memon (CID 06058747), supervised by Professor Michael Templeton
+%
+% Built on the official Imperial College London Poster class (v1.0, 2024).
+% The class file and the two supplied sample templates are UNMODIFIED.
+%
+%!TEX program = xelatex
+% Must be compiled with XeLaTeX (custom OpenType fonts).
+%
+% Content authority: ResearchPaper-06058747-Muhammad Faseeh Memon-Templeton.pdf,
+% 293 pages, SHA-256 f371a8fe86ab6380bc5ee0426f9de708593277cb36d9bc6746b5cb14529df7aa.
+% Every number on this poster traces to a page of that document; the chain is
+% recorded in poster_source_traceability.md.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[
+	landscape,   % Landscape page orientation
+	a1papersize, % A1 (841 x 594 mm) rather than the class default A0
+	print,       % Convert colours to CMYK and use the CMYK logo for printing
+]{ImperialPoster}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning}
+
+% The supplied Imperial Sans Text family has no italic file, so the class's
+% \setmainfont leaves the italic shape undefined and LaTeX substitutes a default
+% face. Redeclared here, in the poster file only, with a modest synthetic slant so
+% that \textit (species names, publication titles) stays in the brand typeface.
+\setmainfont{ImperialSansText}[
+	Path=Fonts/,
+	UprightFont=*-Regular.ttf,
+	BoldFont=*-Bold.ttf,
+	ItalicFont=*-Regular.ttf,
+	ItalicFeatures={FakeSlant=0.18},
+	BoldItalicFont=*-Bold.ttf,
+	BoldItalicFeatures={FakeSlant=0.18},
+]
+
+% The class caption format renders at 10pt on A1, below the official 16pt
+% small-text level. Figure credits on this poster use \smalltext (16pt); this
+% override keeps any stray \caption at the same compliant size.
+\DeclareCaptionFormat{postercaption}{\fontsize{16pt}{20pt}\selectfont#1#2#3}
+\captionsetup{format=postercaption}
+
+% Number call-outs. \largepercent (150pt) is reserved for the single dominant
+% figure; these are its smaller siblings.
+\newcommand{\bignum}[1]{{\ImperialSansExtraBold\fontsize{64pt}{64pt}\selectfont\textcolor{ICLDarkBlue}{#1}}}
+\newcommand{\midnum}[1]{{\ImperialSansExtraBold\fontsize{50pt}{52pt}\selectfont\textcolor{ICLDarkBlue}{#1}}}
+
+% Tight vertical space between a figure and the note that credits it.
+\newcommand{\fignote}[1]{\vspace{-0.65\baselineskip}\smalltext{#1}}
+
+% As \fignote, but after a \boldsection, where the full negative space would let
+% the 42pt line collide with the note beneath it.
+\newcommand{\closingnote}[1]{\vspace{-0.25\baselineskip}\smalltext{#1}}
+
+%----------------------------------------------------------------------------------------
+%	POSTER INFORMATION
+%----------------------------------------------------------------------------------------
+
+% \raggedright is applied inside the title so the long submitted title is not
+% justified and hyphenated by the class title parbox.
+\postertitle{\raggedright Predicting Drinking-Water Contamination Risk and Ranking Monitoring Technologies Under Uncertainty: An Evidence-Aware, Leakage-Safe Decision-Support Framework}
+
+\posterauthors{Muhammad Faseeh Memon, CID 06058747\\[8pt] Supervisor: Professor Michael Templeton\\[8pt] Department of Civil and Environmental Engineering}
+
+% No coauthor logos and no funder logos: this work has neither.
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\titlesection
+
+\vspace{0.25\baselineskip}
+
+%----------------------------------------------------------------------------------------
+%	FULL-WIDTH BAND - P1, THE EVIDENCE-TO-ACTION CHAIN
+%----------------------------------------------------------------------------------------
+
+\begin{center}
+\begin{tikzpicture}[
+	stage/.style={
+		draw=ICLDarkBlue, line width=1.6pt, rounded corners=6pt,
+		text width=13.0cm, minimum height=3.0cm, inner xsep=10pt, inner ysep=8pt,
+		align=left, anchor=north west},
+	num/.style={
+		circle, fill=ICLDarkBlue, text=white, minimum size=1.0cm,
+		inner sep=0pt, font=\fontsize{17pt}{17pt}\selectfont\bfseries},
+	link/.style={-{Latex[length=5mm,width=3.5mm]}, ICLDarkBlue, line width=1.8pt},
+]
+\def\sw{13.0}   % stage width, cm
+\def\sg{2.5}    % gap between stages, cm
+\foreach \i/\name/\desc in {%
+	0/{Evidence and harmonisation}/{Accepted populations, units and reporting basis resolved},%
+	1/{Risk and completeness}/{Record-level exceedance, revisit interval, compatible linkage},%
+	2/{Reliability and transfer}/{Two channels, leakage-safe validation, external evaluation, calibration},%
+	3/{Technology evidence}/{Exact-product identity, evidence class and source standing},%
+	4/{Conditional decision support}/{Archetype preference, then an applied procedure not tradeable in order}%
+}{
+	\node[stage] (s\i) at ({\i*(\sw+\sg)}, 0) {%
+		\raggedright\hspace{1.3cm}\textbf{\textcolor{ICLDarkBlue}{\fontsize{18pt}{20pt}\selectfont \name}}\\[3pt]
+		{\fontsize{15pt}{17pt}\selectfont \desc}};
+	\node[num] at ([shift={(0.78,-0.72)}] s\i.north west) {\the\numexpr\i+1\relax};
+}
+\foreach \i/\j in {0/1, 1/2, 2/3, 3/4}{
+	\draw[link] (s\i.east) -- (s\j.west);
+}
+\node[draw=ICLDarkBlue, line width=1.6pt, rounded corners=6pt,
+      text width=\dimexpr 5\dimexpr 13.0cm\relax + 4\dimexpr 2.5cm\relax - 20pt\relax,
+      inner sep=9pt, align=left, anchor=north west,
+      font=\fontsize{15.5pt}{18pt}\selectfont]
+      at (0, -3.5) {%
+	\raggedright\textbf{\textcolor{ICLDarkBlue}{Permitted terminal outputs:}}
+	technology class \; • \; conditional shortlist \; • \; direct measurement required \; • \; specific evidence request \; • \; deferred named-product recommendation. \textbf{\textcolor{ICLBlue}{Where transfer fails or product evidence is insufficient, the chain exits to abstention or to a named data-acquisition step}} --- it does not force a decision, and no output certifies that water is safe to drink. \textit{P1, simplified from Figures 3.1 and 3.6 of the submitted thesis; stage names and terminal outputs are verbatim.}};
+\end{tikzpicture}
+\end{center}
+
+\vspace{-0.35\baselineskip}
+
+% Inter-paragraph space is reduced inside the column block only. Font sizes are
+% unchanged, at the official 26pt body and 16pt small-text levels.
+\setlength{\parskip}{24pt}
+
+\begin{multicols}{4}
+
+	%----------------------------------------------------------------------------------------
+	%	COLUMN 1 - THE PROBLEM
+	%----------------------------------------------------------------------------------------
+
+	\section{Two decisions, one disconnected evidence base}
+
+	A monitoring programme must answer two linked questions: \textcolor{ICLBlue}{where should measurement effort go}, and \textcolor{ICLBlue}{what should make the measurement}. What has been measured, what a model can be trusted to predict and what an instrument can be relied upon to detect are rarely joined.
+
+	\smalltext{\textbf{Scope.} India is the principal empirical application. Kenya and Malawi are bounded local comparators and support no national estimate; Bangladesh and Ghana appear only as literature-grounded applications of the decision logic, with no model transferred to either.\\[10pt]
+	\textbf{What the records could support.} Six India parameters reached an accepted analytical population. Turbidity and \textit{E.\ coli} reached none, so no baseline was claimed for either. Of 145 state-by-parameter cells with recorded cadence, none is revisited more often than annually at its median --- a monitoring-design limit no model can repair.}
+
+	\boldsection{A recommendation is only as defensible as the evidence layer beneath it.}
+
+	\closingnote{Hosmer, D., Lemeshow, S. \& Sturdivant, R. (2013). \textit{Applied logistic regression}. 3rd edn. Hoboken: Wiley. \quad Hu, X., Dai, M., Sun, J. \& Sunderland, E. (2023). \textit{Current Environmental Health Reports}.\\[10pt]
+	Every figure and number on this poster is traced to a page of the submitted thesis in \textit{poster\_source\_traceability.md}.}
+
+	\columnbreak
+
+	%----------------------------------------------------------------------------------------
+	%	COLUMN 2 - RESULT 1, LEAKAGE-SAFE VALIDATION
+	%----------------------------------------------------------------------------------------
+
+	\section{Random splitting overstated performance}
+
+	Seven tasks, three validation designs. Geographic blocking is what a programme extending into an unmonitored district should plan against.
+
+	\begin{figure}[H]
+		\includegraphics[width=\linewidth]{poster/P2_leakage_safe_validation.pdf}
+	\end{figure}
+
+	\fignote{\textbf{P2.} Values from Table 4.3 and Section 4.3 of the submitted thesis.\\[10pt]
+	The 0.1701 optimism decomposes into \textbf{0.0708} removed by grouping repeat visits to a station, and a further \textbf{0.0993} revealed only by geographic separation.\\[10pt]
+	A scoped label-shuffle control collapsed spatial performance to \textbf{0.501} (95\% interval 0.482 to 0.520): recoverable signal, not a label-independent spatial artefact.\\[10pt]
+	Same-site history (Model B) was higher on all six shared tasks --- a \textcolor{ICLBlue}{random-row channel comparison, not geographic generalisation}.}
+
+	\columnbreak
+
+	%----------------------------------------------------------------------------------------
+	%	COLUMN 3 - RESULT 2, EXTERNAL TRANSFER TO INDIA
+	%----------------------------------------------------------------------------------------
+
+	\section{Ranking transferred where calibration did not}
+
+	\begin{figure}[H]
+		\includegraphics[width=\linewidth]{poster/P3_india_external_transfer.pdf}
+	\end{figure}
+
+	\fignote{\textbf{P3.} Independent CGWB archives; values from Table 4.6 of the submitted thesis.\\[10pt]
+	\textbf{Conductivity, TDS, fluoride, nitrate} --- rank support, 4 of 6: sequence confirmatory sampling. \textbf{pH} --- not supported in this evaluation: measure directly. \textbf{Arsenic} --- evidence-insufficient on 119 observations at 116 sites. \textbf{Any probability use} --- recalibrate on local labels first.}
+
+	\midnum{2.01×}\hspace{1.3cm}\midnum{2.40×}
+
+	\fignote{Confirmatory-test enrichment over the untargeted expectation at the \textbf{recorded operating point}: conductivity, 5,966 tests finding 2,838 exceeding sites against 1,410; TDS, 265 tests finding 154 against 64.2. Not usable for the other four parameters.\\[10pt]
+	\textbf{Rajasthan, worked through.} 12,349 conductivity records at 1,641 sites, 54.06\% above the 1,500\,\textmu S/cm project convention --- a record-level signal, not population exposure. Rank transfer sequences the sampling; the calibration slopes forbid reading any score as a local probability; four products carry stated capability and none passes the evidence gate. Terminal decision: a conditional class shortlist, product-level abstention.}
+
+	\columnbreak
+
+	%----------------------------------------------------------------------------------------
+	%	COLUMN 4 - RESULT 3, TECHNOLOGY EVIDENCE AND WHAT IT CHANGES
+	%----------------------------------------------------------------------------------------
+
+	\section{Capability was common; product evidence was not}
+
+	\bignum{0 of 23}
+
+	\fignote{exact commercial products cleared the eleven-criterion evidence gate. Of \textbf{1,242} product--criterion cells (23 products × 54 criteria), \textbf{223} carry an exact-product document and only \textbf{9} carry independent evidence. The 33-entry landscape is separate: 23 products, 8 reference methods, 2 emerging classes. \textcolor{ICLBlue}{This is abstention, not poor performance --- missing documentation remains unknown evidence.}}
+
+	\begin{figure}[H]
+		\includegraphics[width=\linewidth]{poster/P4_next_action_26_contexts.pdf}
+	\end{figure}
+
+	\fignote{\textbf{P4.} Direct counts across 26 parameter-context decisions in India, Kenya and Malawi, from Figure 4.14 of the submitted thesis. Not a score, and not 26 countries or sites.\\[10pt]
+	\textbf{What resource-constrained monitoring still needs.} Neither cost nor energy per valid result can be derived for any of the 23 products, so neither saving can be priced. Threshold-near accuracy, operator effect, invalid tests, reliability, reagent stability and persistent site, sample, time and method identifiers are the recurring gaps. Of sixteen research priorities, only two concern sensor design.}
+
+	\boldsection{Ranking can stay useful after calibration stops.}
+
+	\closingnote{Where prediction or product evidence is insufficient, the framework returns a measurement or a named evidence request rather than manufacturing certainty.}
+
+%----------------------------------------------------------------------------------------
+
+\end{multicols}
+
+\end{document}
