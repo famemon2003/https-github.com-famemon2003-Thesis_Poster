@@ -1,17 +1,23 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % MSc Environmental Engineering thesis poster
-% Muhammad Faseeh Memon (CID 06058747), supervised by Professor Michael Templeton
+% Muhammad Faseeh Memon, supervised by Professor Michael Templeton
+%
+% Built to the frozen specification in FINAL_POSTER_BUILD_PACKAGE_25_AUG_2026.
+% Asymmetric A1 landscape: left knowledge rail + wide results field.
 %
 % Built on the official Imperial College London Poster class (v1.0, 2024).
-% The class file and the two supplied sample templates are UNMODIFIED.
+% The class file and both supplied sample templates are UNMODIFIED.
 %
 %!TEX program = xelatex
 % Must be compiled with XeLaTeX (custom OpenType fonts).
 %
-% Content authority: ResearchPaper-06058747-Muhammad Faseeh Memon-Templeton.pdf,
-% 293 pages, SHA-256 f371a8fe86ab6380bc5ee0426f9de708593277cb36d9bc6746b5cb14529df7aa.
-% Every number on this poster traces to a page of that document; the chain is
-% recorded in poster_source_traceability.md.
+% Scientific authority: GROUND_TRUTH_FINAL_SUBMITTED_THESIS.pdf, 293 pages,
+% SHA-256 f371a8fe86ab6380bc5ee0426f9de708593277cb36d9bc6746b5cb14529df7aa.
+% Every number traces to a page of that document; see poster_source_traceability.md.
+%
+% Panel widths deliberately sum to slightly LESS than the enclosing \linewidth.
+% Summing to exactly \linewidth makes TeX wrap the second minipage onto a new
+% line, which silently turns the poster into three pages.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[
@@ -20,13 +26,10 @@
 	print,       % Convert colours to CMYK and use the CMYK logo for printing
 ]{ImperialPoster}
 
-\usepackage{tikz}
-\usetikzlibrary{arrows.meta, positioning}
-
 % The supplied Imperial Sans Text family has no italic file, so the class's
-% \setmainfont leaves the italic shape undefined and LaTeX substitutes a default
-% face. Redeclared here, in the poster file only, with a modest synthetic slant so
-% that \textit (species names, publication titles) stays in the brand typeface.
+% \setmainfont leaves the italic shape undefined and LaTeX substitutes a
+% non-brand face. Redeclared here, in the poster file only, with a modest
+% synthetic slant so that \textit stays in the brand typeface.
 \setmainfont{ImperialSansText}[
 	Path=Fonts/,
 	UprightFont=*-Regular.ttf,
@@ -37,33 +40,51 @@
 	BoldItalicFeatures={FakeSlant=0.18},
 ]
 
-% The class caption format renders at 10pt on A1, below the official 16pt
-% small-text level. Figure credits on this poster use \smalltext (16pt); this
-% override keeps any stray \caption at the same compliant size.
-\DeclareCaptionFormat{postercaption}{\fontsize{16pt}{20pt}\selectfont#1#2#3}
+% The class A1 caption format is 10pt, below the official small-text level.
+\DeclareCaptionFormat{postercaption}{\fontsize{16pt}{19pt}\selectfont#1#2#3}
 \captionsetup{format=postercaption}
 
-% Number call-outs. \largepercent (150pt) is reserved for the single dominant
-% figure; these are its smaller siblings.
-\newcommand{\bignum}[1]{{\ImperialSansExtraBold\fontsize{64pt}{64pt}\selectfont\textcolor{ICLDarkBlue}{#1}}}
-\newcommand{\midnum}[1]{{\ImperialSansExtraBold\fontsize{50pt}{52pt}\selectfont\textcolor{ICLDarkBlue}{#1}}}
+\definecolor{RuleGrey}{HTML}{D7DCE4}
 
-% Tight vertical space between a figure and the note that credits it.
-\newcommand{\fignote}[1]{\vspace{-0.65\baselineskip}\smalltext{#1}}
+%----------------------------------------------------------------------------------------
+%	TYPE SCALE (05_TYPOGRAPHY_COLOUR_SPACING.md)
+%----------------------------------------------------------------------------------------
 
-% As \fignote, but after a \boldsection, where the full negative space would let
-% the 42pt line collide with the note beneath it.
-\newcommand{\closingnote}[1]{\vspace{-0.25\baselineskip}\smalltext{#1}}
+\newcommand{\bodyfont}{\fontsize{22pt}{25pt}\selectfont}
+\newcommand{\capfont}{\fontsize{16pt}{19pt}\selectfont}
+\newcommand{\srcfont}{\fontsize{13.5pt}{15.5pt}\selectfont}
+\newcommand{\reffont}{\fontsize{14pt}{15.5pt}\selectfont}
+
+\newcommand{\railhead}[1]{%
+	{\ImperialSansSemiBold\fontsize{30pt}{33pt}\selectfont\color{ICLDarkBlue}#1\par}%
+	\vspace{1.2mm}{\color{ICLBlue}\rule{\linewidth}{1.5pt}}\par\vspace{1.5mm}}
+
+\newcommand{\mainhead}[1]{%
+	{\ImperialSansSemiBold\fontsize{36pt}{39pt}\selectfont\color{ICLDarkBlue}#1\par}%
+	\vspace{1.2mm}{\color{ICLBlue}\rule{\linewidth}{2pt}}\par}
+
+\newcommand{\blockhead}[1]{%
+	{\bfseries\fontsize{26pt}{29pt}\selectfont\color{ICLDarkBlue}#1\par}\vspace{1.8mm}}
+
+\newcommand{\callout}[1]{%
+	{\ImperialSansExtraBold\fontsize{34pt}{36pt}\selectfont\color{ICLDarkBlue}#1\par}}
+
+\newcommand{\srctag}[1]{\vspace{1.4mm}{\srcfont\color{black!55}#1\par}}
+\newcommand{\gapcard}[2]{{\bodyfont\textbf{\textcolor{ICLBlue}{#1}}~— #2\par}\vspace{1.4mm}}
+
+% Centre an image without the vertical padding of the center environment.
+\newcommand{\posterfig}[1]{{\centering#1\par}}
 
 %----------------------------------------------------------------------------------------
 %	POSTER INFORMATION
 %----------------------------------------------------------------------------------------
 
-% \raggedright is applied inside the title so the long submitted title is not
-% justified and hyphenated by the class title parbox.
-\postertitle{\raggedright Predicting Drinking-Water Contamination Risk and Ranking Monitoring Technologies Under Uncertainty: An Evidence-Aware, Leakage-Safe Decision-Support Framework}
+\postertitle{\raggedright Where to Measure, What to Measure With\\[6pt]
+	{\ImperialSansMedium\fontsize{26pt}{30pt}\selectfont Evidence-Aware Drinking-Water Monitoring Under Uncertainty}}
 
-\posterauthors{Muhammad Faseeh Memon, CID 06058747\\[8pt] Supervisor: Professor Michael Templeton\\[8pt] Department of Civil and Environmental Engineering}
+\posterauthors{Muhammad Faseeh Memon\\[6pt]
+	{\fontsize{20pt}{24pt}\selectfont MSc Environmental Engineering \quad Supervisor: Professor Michael Templeton\\
+	Department of Civil and Environmental Engineering, Imperial College London}}
 
 % No coauthor logos and no funder logos: this work has neither.
 
@@ -71,140 +92,156 @@
 
 \begin{document}
 
+\setlength{\parskip}{0pt}
+
 \titlesection
 
-\vspace{0.25\baselineskip}
+\vspace{0.5mm}
 
-%----------------------------------------------------------------------------------------
-%	FULL-WIDTH BAND - P1, THE EVIDENCE-TO-ACTION CHAIN
-%----------------------------------------------------------------------------------------
+\noindent
+%=========================================================================
+%	LEFT KNOWLEDGE RAIL - 18.5 cm
+%=========================================================================
+\begin{minipage}[t]{18.5cm}\vspace{0pt}
 
-\begin{center}
-\begin{tikzpicture}[
-	stage/.style={
-		draw=ICLDarkBlue, line width=1.6pt, rounded corners=6pt,
-		text width=13.0cm, minimum height=3.0cm, inner xsep=10pt, inner ysep=8pt,
-		align=left, anchor=north west},
-	num/.style={
-		circle, fill=ICLDarkBlue, text=white, minimum size=1.0cm,
-		inner sep=0pt, font=\fontsize{17pt}{17pt}\selectfont\bfseries},
-	link/.style={-{Latex[length=5mm,width=3.5mm]}, ICLDarkBlue, line width=1.8pt},
-]
-\def\sw{13.0}   % stage width, cm
-\def\sg{2.5}    % gap between stages, cm
-\foreach \i/\name/\desc in {%
-	0/{Evidence and harmonisation}/{Accepted populations, units and reporting basis resolved},%
-	1/{Risk and completeness}/{Record-level exceedance, revisit interval, compatible linkage},%
-	2/{Reliability and transfer}/{Two channels, leakage-safe validation, external evaluation, calibration},%
-	3/{Technology evidence}/{Exact-product identity, evidence class and source standing},%
-	4/{Conditional decision support}/{Archetype preference, then an applied procedure not tradeable in order}%
-}{
-	\node[stage] (s\i) at ({\i*(\sw+\sg)}, 0) {%
-		\raggedright\hspace{1.3cm}\textbf{\textcolor{ICLDarkBlue}{\fontsize{18pt}{20pt}\selectfont \name}}\\[3pt]
-		{\fontsize{15pt}{17pt}\selectfont \desc}};
-	\node[num] at ([shift={(0.78,-0.72)}] s\i.north west) {\the\numexpr\i+1\relax};
-}
-\foreach \i/\j in {0/1, 1/2, 2/3, 3/4}{
-	\draw[link] (s\i.east) -- (s\j.west);
-}
-\node[draw=ICLDarkBlue, line width=1.6pt, rounded corners=6pt,
-      text width=\dimexpr 5\dimexpr 13.0cm\relax + 4\dimexpr 2.5cm\relax - 20pt\relax,
-      inner sep=9pt, align=left, anchor=north west,
-      font=\fontsize{15.5pt}{18pt}\selectfont]
-      at (0, -3.5) {%
-	\raggedright\textbf{\textcolor{ICLDarkBlue}{Permitted terminal outputs:}}
-	technology class \; • \; conditional shortlist \; • \; direct measurement required \; • \; specific evidence request \; • \; deferred named-product recommendation. \textbf{\textcolor{ICLBlue}{Where transfer fails or product evidence is insufficient, the chain exits to abstention or to a named data-acquisition step}} --- it does not force a decision, and no output certifies that water is safe to drink. \textit{P1, simplified from Figures 3.1 and 3.6 of the submitted thesis; stage names and terminal outputs are verbatim.}};
-\end{tikzpicture}
-\end{center}
+	\railhead{Introduction — why this matters}
 
-\vspace{-0.35\baselineskip}
+	\callout{363 million}
+	\vspace{-1.5mm}
+	{\bodyfont people in India lack safely managed drinking water.~[1]\par}
 
-% Inter-paragraph space is reduced inside the column block only. Font sizes are
-% unchanged, at the official 26pt body and 16pt small-text levels.
-\setlength{\parskip}{24pt}
+	\vspace{1.5mm}
 
-\begin{multicols}{4}
+	\callout{35 / 38 surveys}
+	\vspace{-1.5mm}
+	{\bodyfont found fewer households free of \textit{E.\ coli} at point of use than at collection; mean \textbf{−12.9 pp}.~[2]\par}
 
-	%----------------------------------------------------------------------------------------
-	%	COLUMN 1 - THE PROBLEM
-	%----------------------------------------------------------------------------------------
+	\vspace{1.5mm}
 
-	\section{Two decisions, one disconnected evidence base}
+	{\bodyfont\textbf{\textcolor{ICLDarkBlue}{Where to test, and what to test with?}}\par}
 
-	A monitoring programme must answer two linked questions: \textcolor{ICLBlue}{where should measurement effort go}, and \textcolor{ICLBlue}{what should make the measurement}. What has been measured, what a model can be trusted to predict and what an instrument can be relied upon to detect are rarely joined.
+	\vspace{2mm}
 
-	\smalltext{\textbf{Scope.} India is the principal empirical application. Kenya and Malawi are bounded local comparators and support no national estimate; Bangladesh and Ghana appear only as literature-grounded applications of the decision logic, with no model transferred to either.\\[10pt]
-	\textbf{What the records could support.} Six India parameters reached an accepted analytical population. Turbidity and \textit{E.\ coli} reached none, so no baseline was claimed for either. Of 145 state-by-parameter cells with recorded cadence, none is revisited more often than annually at its median --- a monitoring-design limit no model can repair.}
+	\railhead{Literature review — what was missing}
 
-	\boldsection{A recommendation is only as defensible as the evidence layer beneath it.}
+	{\bodyfont\textbf{\textcolor{ICLBlue}{DATA}} units, chemical basis and denominators differ across archives. \textbf{\textcolor{ICLBlue}{PREDICTION}} random validation overstates new-area performance. \textbf{\textcolor{ICLBlue}{TECHNOLOGY}} nominal capability is not exact-product evidence.\par}
 
-	\closingnote{Hosmer, D., Lemeshow, S. \& Sturdivant, R. (2013). \textit{Applied logistic regression}. 3rd edn. Hoboken: Wiley. \quad Hu, X., Dai, M., Sun, J. \& Sunderland, E. (2023). \textit{Current Environmental Health Reports}.\\[10pt]
-	Every figure and number on this poster is traced to a page of the submitted thesis in \textit{poster\_source\_traceability.md}.}
+	\vspace{1.5mm}
+	{\bodyfont\textbf{\textcolor{ICLDarkBlue}{Gap:}} no study connected all three into a pathway permitted to stop and request evidence.~[3--5]\par}
 
-	\columnbreak
+	\vspace{2mm}
 
-	%----------------------------------------------------------------------------------------
-	%	COLUMN 2 - RESULT 1, LEAKAGE-SAFE VALIDATION
-	%----------------------------------------------------------------------------------------
+	\railhead{Methodology}
 
-	\section{Random splitting overstated performance}
+	\posterfig{\includegraphics[width=12.8cm, trim=5pt 100pt 5pt 5pt, clip]{poster_final/methodology_figure_3_1.pdf}}
 
-	Seven tasks, three validation designs. Geographic blocking is what a programme extending into an unmonitored district should plan against.
+	\vspace{1.6mm}
+	{\capfont\textbf{Five-stage evidence-to-decision sequence;} abstention is a designed output. \textcolor{black!55}{Source: thesis Fig. 3.1.}\par}
 
-	\begin{figure}[H]
-		\includegraphics[width=\linewidth]{poster/P2_leakage_safe_validation.pdf}
-	\end{figure}
+	\vspace{1mm}
 
-	\fignote{\textbf{P2.} Values from Table 4.3 and Section 4.3 of the submitted thesis.\\[10pt]
-	The 0.1701 optimism decomposes into \textbf{0.0708} removed by grouping repeat visits to a station, and a further \textbf{0.0993} revealed only by geographic separation.\\[10pt]
-	A scoped label-shuffle control collapsed spatial performance to \textbf{0.501} (95\% interval 0.482 to 0.520): recoverable signal, not a label-independent spatial artefact.\\[10pt]
-	Same-site history (Model B) was higher on all six shared tasks --- a \textcolor{ICLBlue}{random-row channel comparison, not geographic generalisation}.}
+	\railhead{References}
 
-	\columnbreak
+	{\reffont\raggedright
+	\begin{minipage}[t]{8.6cm}\raggedright\vspace{0pt}
+	[1]~WHO \& UNICEF (2023). \textit{Progress on household drinking water, 2000--2022}.\par\vspace{1mm}
+	[2]~Santos, T. \textit{et al.} (2023). \textit{E.\ coli} in drinking water sources. \textit{J.\ Water Health}.\par\vspace{1mm}
+	[3]~Roberts, D. \textit{et al.} (2017). Cross-validation for structured data. \textit{Ecography}.\par\vspace{1mm}
+	[4]~Camargo, E. \textit{et al.} (2023). Low-cost water sensors for IoT. \textit{Sensors}.\par
+	\end{minipage}\hspace{0.7cm}%
+	\begin{minipage}[t]{8.6cm}\raggedright\vspace{0pt}
+	[5]~Pichel Mira, N. \textit{et al.} (2023). Field testing in LMIC regions. \textit{J.\ Environ.\ Chem.\ Eng.}\par\vspace{1mm}
+	[6]~Trimmer, J. \textit{et al.} (2024). Costs of monitoring in rural Africa. \textit{Environ.\ Sci.\ Technol.}\par\vspace{1mm}
+	[7]~Van Geen, A. \textit{et al.} (2019). Testing 30,000 wells for arsenic. \textit{Sci.\ Total Environ.}\par
+	\end{minipage}
+	}
 
-	%----------------------------------------------------------------------------------------
-	%	COLUMN 3 - RESULT 2, EXTERNAL TRANSFER TO INDIA
-	%----------------------------------------------------------------------------------------
+\end{minipage}%
+\hspace{1.0cm}%
+%=========================================================================
+%	MAIN RESULTS FIELD - 59.4 cm
+%=========================================================================
+\begin{minipage}[t]{59.4cm}\vspace{0pt}
 
-	\section{Ranking transferred where calibration did not}
+	%--------------------------------------------------------------
+	%	TOP ORIENTATION SPINE - P2 GRAPHICAL ABSTRACT
+	%--------------------------------------------------------------
+	\posterfig{\includegraphics[width=34.5cm]{poster_final/P2_graphical_abstract.png}}
 
-	\begin{figure}[H]
-		\includegraphics[width=\linewidth]{poster/P3_india_external_transfer.pdf}
-	\end{figure}
+	\vspace{1mm}
+	{\srcfont\color{black!55} Thesis-derived synthesis; values verified against the submitted report.\par}
 
-	\fignote{\textbf{P3.} Independent CGWB archives; values from Table 4.6 of the submitted thesis.\\[10pt]
-	\textbf{Conductivity, TDS, fluoride, nitrate} --- rank support, 4 of 6: sequence confirmatory sampling. \textbf{pH} --- not supported in this evaluation: measure directly. \textbf{Arsenic} --- evidence-insufficient on 119 observations at 116 sites. \textbf{Any probability use} --- recalibrate on local labels first.}
+	\vspace{3mm}
 
-	\midnum{2.01×}\hspace{1.3cm}\midnum{2.40×}
+	\mainhead{Results \& Discussion — what survived, what transferred, and where measurement matters next}
 
-	\fignote{Confirmatory-test enrichment over the untargeted expectation at the \textbf{recorded operating point}: conductivity, 5,966 tests finding 2,838 exceeding sites against 1,410; TDS, 265 tests finding 154 against 64.2. Not usable for the other four parameters.\\[10pt]
-	\textbf{Rajasthan, worked through.} 12,349 conductivity records at 1,641 sites, 54.06\% above the 1,500\,\textmu S/cm project convention --- a record-level signal, not population exposure. Rank transfer sequences the sampling; the calibration slopes forbid reading any score as a local probability; four products carry stated capability and none passes the evidence gate. Terminal decision: a conditional class shortlist, product-level abstention.}
+	\vspace{3mm}
 
-	\columnbreak
+	%--------------------------------------------------------------
+	%	MAIN RESULTS ROW  (21.6 + 1.0 + 36.4 = 59.0 < 59.4)
+	%--------------------------------------------------------------
+	\noindent
+	\begin{minipage}[t]{19.8cm}\vspace{0pt}
+		\includegraphics[width=19.8cm]{poster_final/P1_decision_uncertainty_map.png}
+		\srctag{State/UT-level measurement priority, not contamination severity or population prevalence. Source: Fig. 4.7 / Table 4.11.}
+	\end{minipage}%
+	\hspace{1.0cm}%
+	\begin{minipage}[t]{38.2cm}\vspace{0pt}
+		\blockhead{Honest validation: what survives geographic separation?}
 
-	%----------------------------------------------------------------------------------------
-	%	COLUMN 4 - RESULT 3, TECHNOLOGY EVIDENCE AND WHAT IT CHANGES
-	%----------------------------------------------------------------------------------------
+		\posterfig{\includegraphics[width=23.0cm, trim=0pt 405pt 18pt 6pt, clip]{poster_final/result_figure_4_4.pdf}}
 
-	\section{Capability was common; product evidence was not}
+		\vspace{2mm}
+		{\bodyfont\textbf{\textcolor{ICLDarkBlue}{5 / 7}} tasks retain acceptable-or-better spatial discrimination; label shuffle collapses to \textbf{\textcolor{ICLDarkBlue}{ROC-AUC 0.501}}. \textbf{Random splitting overstated deployment-facing performance; useful signal remained for most tasks.}\par}
+		\srctag{Source: submitted thesis, Fig. 4.4 panel (a), Tables 4.3--4.4 and 4.7.}
+	\end{minipage}
 
-	\bignum{0 of 23}
+	\vspace{3mm}
 
-	\fignote{exact commercial products cleared the eleven-criterion evidence gate. Of \textbf{1,242} product--criterion cells (23 products × 54 criteria), \textbf{223} carry an exact-product document and only \textbf{9} carry independent evidence. The 33-entry landscape is separate: 23 products, 8 reference methods, 2 emerging classes. \textcolor{ICLBlue}{This is abstention, not poor performance --- missing documentation remains unknown evidence.}}
+	%--------------------------------------------------------------
+	%	BOTTOM RESULTS ROW  (18.0 + 0.8 + 15.0 + 0.8 + 24.6 = 59.2 < 59.4)
+	%--------------------------------------------------------------
+	\noindent
+	% --- Block 1: India transfer -----------------------------------
+	\begin{minipage}[t]{18.0cm}\vspace{0pt}
+		\blockhead{External India transfer: ranking survives where calibration does not}
+		\includegraphics[width=18.0cm, trim=0pt 42pt 12pt 5pt, clip]{poster_final/result_figure_4_5.pdf}
+		\srctag{Conductivity, TDS, fluoride and nitrate retain useful ordering; pH routes to direct measurement, arsenic to evidence acquisition. Local recalibration precedes probability-based use. Source: Fig. 4.5 / Table 4.6.}
+	\end{minipage}%
+	\hspace{0.8cm}%
+	% --- Block 2: binding constraint (figure carries its own title) --
+	\begin{minipage}[t]{15.0cm}\vspace{0pt}
+		\includegraphics[width=15.0cm, trim=20pt 45pt 15pt 8pt, clip]{poster_final/result_figure_4_13.pdf}
+		\srctag{Data constrain arsenic, turbidity and \textit{E.\ coli}; pH at transfer; the four rank-supported parameters at calibration and product evidence. Source: Fig. 4.13.}
+	\end{minipage}%
+	\hspace{0.8cm}%
+	% --- Block 3: application + conclusion --------------------------
+	\begin{minipage}[t]{24.6cm}\vspace{0pt}
+		\blockhead{From analysis to monitoring action}
 
-	\begin{figure}[H]
-		\includegraphics[width=\linewidth]{poster/P4_next_action_26_contexts.pdf}
-	\end{figure}
+		{\bodyfont\textbf{\textcolor{ICLDarkBlue}{Rajasthan:}} conductivity 12,349 records, \textbf{54.06\%} above the 1,500\,µS/cm convention; TDS 3,131 records, \textbf{51.96\%} above 1,000\,mg/L.\par}
 
-	\fignote{\textbf{P4.} Direct counts across 26 parameter-context decisions in India, Kenya and Malawi, from Figure 4.14 of the submitted thesis. Not a score, and not 26 countries or sites.\\[10pt]
-	\textbf{What resource-constrained monitoring still needs.} Neither cost nor energy per valid result can be derived for any of the 23 products, so neither saving can be priced. Threshold-near accuracy, operator effect, invalid tests, reliability, reagent stability and persistent site, sample, time and method identifiers are the recurring gaps. Of sixteen research priorities, only two concern sensor design.}
+		\vspace{1.6mm}
+		{\bodyfont\textbf{\textcolor{ICLBlue}{Rank → confirm → recalibrate locally → technology-class shortlist → product-level abstention}}\par}
 
-	\boldsection{Ranking can stay useful after calibration stops.}
+		\vspace{1.5mm}
+		{\ImperialSansExtraBold\fontsize{26pt}{29pt}\selectfont\color{ICLDarkBlue}Only 2 / 16 research priorities concern sensor design.\par}
+		\vspace{1mm}
+		{\capfont Most need evidence existing classes can supply: threshold-near validation • recalibration labels • cost and energy per valid result • reliability • operator effect • persistent identifiers.~[6,\,7]\par}
 
-	\closingnote{Where prediction or product evidence is insufficient, the framework returns a measurement or a named evidence request rather than manufacturing certainty.}
+		\vspace{1.6mm}
+		{\color{RuleGrey}\rule{\linewidth}{1.5pt}}\par
+		\vspace{1.2mm}
 
-%----------------------------------------------------------------------------------------
+		{\bodyfont
+		\textbf{1.}~Honest validation preserves decision-useful signal.\par\vspace{0.8mm}
+		\textbf{2.}~Rank transfer supports targeted confirmation, 4 of 6.\par\vspace{0.8mm}
+		\textbf{3.}~All 26 contexts return a defined next action.\par}
 
-\end{multicols}
+		\vspace{1.8mm}
+		{\ImperialSansSemiBold\fontsize{20pt}{23pt}\selectfont\color{ICLBlue}Prediction prioritises measurement; evidence sets how far the decision may go.\par}
+	\end{minipage}
+
+\end{minipage}
 
 \end{document}
